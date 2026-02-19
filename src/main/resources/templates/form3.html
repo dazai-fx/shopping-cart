@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Step 3 of 3 - Payment Method and Confirmation</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body class="bg-light">
+
+<div class="container-lg py-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+
+            <h2 class="text-center mb-4 fw-bold">
+                Step 3 of 3 - Payment Method and Confirmation
+            </h2>
+
+            <form th:action="@{/final}" method="post" th:object="${ingreso}">
+
+                <!-- Order summary -->
+                <div class="mb-5 p-4 bg-light rounded-3 border">
+
+                    <h4 class="mb-3 ">Order summary</h4>
+
+                    <div class="row g-3 align-items-end">
+                        <div class="col-12">
+                            <p>Products: </p>
+                            <!-- TO DO foreach recorriendo los productos con: nombre | num producs | precio total -->
+                        </div>
+
+                        <p>Gross total: <span></span> €</p>
+                        <p>Coupon discount: <span></span> €</p>
+                        <p>Total to pay: <span></span> €</p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+
+                <div class="mb-5 p-4 bg-light rounded-3 border">
+
+                    <h4 class="mb-3 ">Payment Method</h4>
+
+                    <div class="col-md-4">
+                        <input type="checkbox" >
+                        <label class="form-label">Card</label>
+                        <label class="form-label">Card number: </label>
+                        <input type="text" class="form-control">
+                        <label class="form-label">Expiry (MM/YY): </label>
+                        <input type="text" class="form-control">
+                        <input type="text" class="form-control">
+                        <label class="form-label">CVV: </label>
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <input type="checkbox" >
+                        <label class="form-label">Paypal</label>
+                        <label class="form-label">Paypal email: </label>
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <input type="checkbox" >
+                        <label class="form-label">Bank transfer</label>
+                        <label class="form-label">IBAN</label>
+                        <input type="text" class="form-control">
+                        <p>(Order will be marked as pending)</p>
+                    </div>
+
+                </div>
+
+                <!-- CONTINUE BUTTON -->
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success btn-lg px-4">
+                        < Back to cart
+                    </button>
+                    <button type="submit" class="btn btn-success btn-lg px-4">
+                        Go to payment >
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

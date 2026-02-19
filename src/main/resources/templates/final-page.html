@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order completed</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body class="bg-light">
+
+<div class="container-lg py-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+
+            <h2 class="text-center mb-4 fw-bold">
+                Order completed
+            </h2>
+
+            <p>Thank you for your purchase!</p>
+            <p>Order number:  <span></span></p>
+            <p>Amount paid:  <span></span> €</p>
+            <p>Payment method:  <span></span> (<span></span>)</p>
+            <br>
+            <p>A confirmation email has been sent to you</p>
+            <a th:href="@{/}" class="btn btn-success btn-lg px-4" role="button">
+                Back to cart
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
