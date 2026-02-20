@@ -8,7 +8,7 @@ public class OrderItem {
     private CustomerOrder customerOrder;
     private String productName;
     private BigDecimal unitPrice;
-    private int quantity; // no se si ocn un int me valdría
+    private int quantity;
     private BigDecimal lineTotal;  // subtotal de la tabla
 
 }

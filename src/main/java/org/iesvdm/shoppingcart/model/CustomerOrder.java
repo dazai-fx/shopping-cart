@@ -14,7 +14,7 @@ public class CustomerOrder {
     private BigDecimal finalTotal;
     private PaymentMethod paymentMethod;
     private PaymentStatus paymentStatus;
-    private String PaymentDetails; // preguntar al profesor sobre esta propiedad que tipo de dato usar
+    private String PaymentDetails;
     // Bilding address fields
     private String billingName;
     private Long billingTaxId;
