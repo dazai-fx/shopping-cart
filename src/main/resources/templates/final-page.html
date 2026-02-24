@@ -17,9 +17,9 @@
             </h2>
 
             <p>Thank you for your purchase!</p>
-            <p>Order number:  <span></span></p>
-            <p>Amount paid:  <span></span> €</p>
-            <p>Payment method:  <span></span> (<span></span>)</p>
+            <p>Order number:  <span th:text="${customerOrderDTO.orderNumber}"></span></p>
+            <p>Amount paid:  <span th:text="${customerOrderDTO.finalTotal}"></span> €</p>
+            <p>Payment method:  <span th:text="${customerOrderDTO.paymentMethod}"></span> (<span th:text="${customerOrderDTO.maskedPaymentDetail}"></span>)</p>
             <br>
             <p>A confirmation email has been sent to you</p>
             <a th:href="@{/}" class="btn btn-success btn-lg px-4" role="button">

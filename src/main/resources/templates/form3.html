@@ -5,6 +5,7 @@
     <title>Step 3 of 3 - Payment Method and Confirmation</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
     <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+    <script type="module" th:src="@{/js/Step3.js}"></script>
 </head>
 <body class="bg-light">
 
@@ -16,7 +17,7 @@
                 Step 3 of 3 - Payment Method and Confirmation
             </h2>
 
-            <form th:action="@{/final}" method="post" th:object="${ingreso}">
+            <form th:action="@{/final}" method="post" th:object="${customerOrderDTO}">
 
                 <!-- Order summary -->
                 <div class="mb-5 p-4 bg-light rounded-3 border">
@@ -26,50 +27,89 @@
                     <div class="row g-3 align-items-end">
                         <div class="col-12">
                             <p>Products: </p>
-                            <!-- TO DO foreach recorriendo los productos con: nombre | num producs | precio total -->
+                            <div th:if="${#lists.isEmpty(customerOrderDTO.productsList)}">
+                                <p class="text-muted">No products in the order.</p>
+                            </div>
+                            <div th:if="${!#lists.isEmpty(customerOrderDTO.productsList)}">
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                                        th:each="product : ${customerOrderDTO.productsList}">
+                                        <div>
+                                            <strong th:text="${product.productName}">Product name</strong>
+                                            <span class="text-muted">
+                                                (x<span th:text="${product.quantity}">1</span>)
+                                            </span>
+                                        </div>
+                                        <span th:text="${product.lineTotal} + ' €'">0.00 €</span>
+                                    </li>
+                                </ul>
+                            </div>
+
                         </div>
 
-                        <p>Gross total: <span></span> €</p>
-                        <p>Coupon discount: <span></span> €</p>
-                        <p>Total to pay: <span></span> €</p>
+                        <p>Gross total: <span th:text="${customerOrderDTO.grossTotal}"></span> €</p>
+                        <p>Coupon discount: <span th:text="${customerOrderDTO.discountTotal}"></span> €</p>
+                        <p>Total to pay: <span th:text="${customerOrderDTO.finalTotal}"></span> €</p>
 
-                        </div>
                     </div>
                 </div>
 
                 <!-- Payment Method -->
 
-                <div class="mb-5 p-4 bg-light rounded-3 border">
+                <div id="payment-method-section" class="mb-5 p-4 bg-light rounded-3 border">
+                    <h4 class="mb-3">Payment Method</h4>
 
-                    <h4 class="mb-3 ">Payment Method</h4>
+                    <div class="row">
+                        <div class="col-md-4 border-end">
+                            <div class="form-check mb-2">
+                                <input type="radio" class="form-check-input" th:field="*{paymentMethod}" value="CARD" id="payCard">
+                                <label class="form-check-label fw-bold" for="payCard">Credit Card</label>
+                            </div>
+                            <div class="ps-3 payment-section" data-method="CARD">
+                                <label class="form-label small">Card number:</label>
+                                <input type="text" class="form-control form-control-sm mb-2" name="cardNumber">
+                                <div class="row g-2">
+                                    <div class="col-7">
+                                        <label class="form-label small">Expiry month:</label>
+                                        <input type="text" class="form-control form-control-sm"
+                                               th:field="*{cardMonth}" min="1" max="12">
+                                    </div>
+                                    <div class="col-5">
+                                        <label class="form-label small">Expiry year:</label>
+                                        <input type="text" class="form-control form-control-sm"
+                                               th:field="*{cardYear}">
+                                    </div>
+                                    <div class="col-5">
+                                        <label class="form-label small">CVV:</label>
+                                        <input type="text" class="form-control form-control-sm" th:field="*{cardCvv}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="col-md-4">
-                        <input type="checkbox" >
-                        <label class="form-label">Card</label>
-                        <label class="form-label">Card number: </label>
-                        <input type="text" class="form-control">
-                        <label class="form-label">Expiry (MM/YY): </label>
-                        <input type="text" class="form-control">
-                        <input type="text" class="form-control">
-                        <label class="form-label">CVV: </label>
-                        <input type="text" class="form-control">
+                        <div class="col-md-4 border-end" >
+                            <div class="form-check mb-2">
+                                <input type="radio" class="form-check-input" th:field="*{paymentMethod}" value="PAYPAL" id="payPaypal">
+                                <label class="form-check-label fw-bold" for="payPaypal">PayPal</label>
+                            </div>
+                            <div class="ps-3 payment-section" data-method="PAYPAL">
+                                <label class="form-label small">Paypal email:</label>
+                                <input type="email" class="form-control form-control-sm" th:field="*{paypalEmail}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-check mb-2">
+                                <input type="radio" class="form-check-input" th:field="*{paymentMethod}" value="BANK_TRANSFER" id="payTransfer">
+                                <label class="form-check-label fw-bold" for="payTransfer">Bank Transfer</label>
+                            </div>
+                            <div class="ps-3 payment-section" data-method="BANK_TRANSFER">
+                                <label class="form-label small">IBAN:</label>
+                                <input type="text" class="form-control form-control-sm" th:field="*{bankIBAN}" placeholder="ES00 1234 5678 9000 0000 000">
+                                <p class="text-muted small mt-1">(Order will be marked as pending)</p>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <input type="checkbox" >
-                        <label class="form-label">Paypal</label>
-                        <label class="form-label">Paypal email: </label>
-                        <input type="text" class="form-control">
-                    </div>
-
-                    <div class="col-md-4">
-                        <input type="checkbox" >
-                        <label class="form-label">Bank transfer</label>
-                        <label class="form-label">IBAN</label>
-                        <input type="text" class="form-control">
-                        <p>(Order will be marked as pending)</p>
-                    </div>
-
                 </div>
 
                 <!-- CONTINUE BUTTON -->
