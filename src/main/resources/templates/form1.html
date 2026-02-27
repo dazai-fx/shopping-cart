@@ -19,6 +19,43 @@
 
             <form th:action="@{/step2}" method="post" th:object="${customerOrderDTO}" id="form-1">
 
+                <!-- Modal para los errores -->
+
+                <div class="modal fade" id="errorModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title">Errors in the form</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('*')}"
+                                        th:text="${err}">
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">
+                                    Cerrar
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <script th:if="${#fields.hasErrors('*')}">
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                        errorModal.show();
+                    });
+                </script>
+
                 <!-- PRODUCTS TABLE -->
                 <div class="mb-5">
                     <h4 class="mb-3">Products in your cart</h4>
@@ -117,7 +154,7 @@
                     </div>
                 </div>
 
-                <!-- Inputs ocultos para enviarlos por el form -->
+                <!-- Hidden inputs to submit via the form -->
                 <div id="hidden-inputs-container"></div>
 
                 <!-- CONTINUE BUTTON -->

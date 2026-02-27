@@ -6,4 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addressSync.init();
 
+    const backButton = document.getElementById("back-button");
+
+    backButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = "/step1";
+    });
+
 });
